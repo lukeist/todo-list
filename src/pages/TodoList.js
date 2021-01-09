@@ -2,7 +2,8 @@ import TodoItem from "../components/TodoItem";
 import { useSelector } from "react-redux";
 
 const TodoList = () => {
-  const list = useSelector((state) => state.todos);
+  const list = useSelector((state) => state);
+  // console.log(list);
   return (
     <div className="todo-list">
       {/* <TodoItem content={content} id={id} /> */}

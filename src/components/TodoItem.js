@@ -2,25 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { removeTodo, checkTodo } from "../actions/todoAction";
-import store from "../store";
+import { todoRemoved, todoChecked } from "../store/todo";
 
 const TodoItem = ({ id, content, check }) => {
   const dispatch = useDispatch();
   const [box, setBox] = useState("unchecked");
   // var box = "unchecked";
   const checkClick = () => {
-    dispatch(checkTodo(id, check));
+    // dispatch(todoChecked( id, check ));
+    dispatch(todoChecked({ id, check }));
     if (check === true) {
       setBox("checked");
-      console.log(box);
+      // console.log(box);
     } else {
       setBox("unchecked");
-      console.log(box);
+      // console.log(box);
     }
   };
   const removeClick = () => {
-    dispatch(removeTodo(id));
+    // dispatch(todoRemoved(id));
+    console.log(todoRemoved({ id }));
+    dispatch(todoRemoved({ id }));
   };
   return (
     <StyledItem>

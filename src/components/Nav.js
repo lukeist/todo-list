@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import store from "../store";
 import { useDispatch } from "react-redux";
-import { loadTodo } from "../actions/todoAction";
+import { todoAdded } from "../store/todo";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+// import store from "./store/setStore";
 
 const Nav = () => {
+  // const test = () => {
+  //   console.log(store);
+  // };
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
   const inputTodo = (e) => {
@@ -17,7 +20,9 @@ const Nav = () => {
     e.preventDefault();
     const id = uuidv4();
     if (content.length > 0) {
-      dispatch(loadTodo(id, content, true));
+      // dispatch(todoAdded( id, content, true ));
+      dispatch(todoAdded({ id, content, check: true }));
+      console.log(todoAdded({ id, content, check: true }));
     } else {
       alert("This field can't be empty!");
     }
