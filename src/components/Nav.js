@@ -1,43 +1,67 @@
-import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
-import { todoAdded } from "../store/todo";
+import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-// import store from "./store/setStore";
+import { useDispatch } from "react-redux";
+import { currentListStatusSet, allListStatusSet } from "../store/rlists";
+import setStore from "../store/setStore";
 
-const Nav = () => {
-  // const test = () => {
-  //   console.log(store);
-  // };
-  const [content, setContent] = useState("");
+const Nav = ({ currentList, setCurrentLists }) => {
+  const lists = setStore.getState().entities.lists;
+
   const dispatch = useDispatch();
-  const inputTodo = (e) => {
-    setContent(e.target.value);
-  };
-  // const trim = str => str.trim();
-  const submitInput = (e) => {
-    e.preventDefault();
-    const id = uuidv4();
-    if (content.length > 0) {
-      // dispatch(todoAdded( id, content, true ));
-      dispatch(todoAdded({ id, content, check: true }));
-      console.log(todoAdded({ id, content, check: true }));
-    } else {
-      alert("This field can't be empty!");
+
+  const setToCurrentList = () => {
+    if (lists.length > 0) {
+      dispatch(currentListStatusSet({ id: currentList.id, status: true }));
     }
-    setContent("");
-    // console.log(store.getState());
+    const listsUpdate = setStore.getState().entities.lists;
+    setCurrentLists(listsUpdate);
   };
+  const setToAllList = () => {
+    dispatch(allListStatusSet({ status: true }));
+    const listsUpdate = setStore.getState().entities.lists;
+    setCurrentLists(listsUpdate);
+  };
+
+  const setFinished = () => {
+    const clickM = setStore
+      .getState()
+      .entities.todos.filter((todo) => todo.check === false);
+    console.log(clickM);
+  };
+  const setUnfinished = () => {
+    const clickM = setStore
+      .getState()
+      .entities.todos.filter((todo) => todo.check === true);
+    console.log(clickM);
+  };
+
   return (
     <NavBar>
-      <h2>my to-do list</h2>
+      {lists.length > 0 ? (
+        <h2>{currentList.title}</h2>
+      ) : (
+        <h2>you have no active todo list</h2>
+      )}
+
+      {/* {lists.filter(
+        (item) => (item.id = <ItemList key={item.id} title={item.title} />)
+      )} */}
+      {/* 
       <form className="nav-submit">
         <input type="text" onChange={inputTodo} value={content} />
-        <button type="submit" className="button-submit" onClick={submitInput}>
-          Submit
+        <button type="submit" className="button-submit" onClick={setTodo}>
+          New
         </button>
-      </form>
+      </form> */}
+      <StyledBar>
+        <button onClick={setFinished}>finished</button>
+        <button onClick={setUnfinished}>unfinished</button>
+        <button onClick={setToCurrentList}>current list</button>
+        <button onClick={setToAllList}>all lists</button>
+        {/* <button>newest</button>
+        <button>oldest</button> */}
+      </StyledBar>
     </NavBar>
   );
 };
@@ -89,6 +113,25 @@ const NavBar = styled(motion.div)`
       box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 
       outline: none;
+    }
+  }
+`;
+const StyledBar = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  padding: 0rem 2rem;
+  button {
+    border: none;
+    padding: 1rem 2rem;
+    background: #006c86;
+    cursor: pointer;
+    :focus {
+      outline: none;
+    }
+    :active {
+      /* outline: none; */
+      background: #cf2929;
+      transition: ease-out 0.3s;
     }
   }
 `;

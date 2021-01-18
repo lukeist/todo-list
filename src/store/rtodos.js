@@ -1,10 +1,3 @@
-import {
-  createAction,
-  createReducer,
-  createSlice,
-  createStore,
-} from "@reduxjs/toolkit";
-
 // // Actions OLD
 // export const loadTodo = (id, content, check) => (dispatch) => {
 //   // const loadData = todoItem(id);
@@ -111,18 +104,25 @@ import {
 //   },
 // });
 // export default reducer;
+import { createSlice } from "@reduxjs/toolkit";
+import { iniTodos } from "../store/ListInitialState";
+import { todosAssigned } from "./rlists";
 
 const slice = createSlice({
   name: "todos",
-  initialState: [],
+  initialState: iniTodos,
   reducers: {
     todoAdded: (todos, action) => {
-      // ^^^ cant use [todoAdded.type] like above because todoAdded is not an object anymore
       todos.push({
+        listId: action.payload.listId,
         id: action.payload.id,
         content: action.payload.content,
         check: action.payload.check,
       });
+    },
+    todoEdited: (todos, action) => {
+      const index = todos.findIndex((todo) => todo.id === action.payload.id);
+      todos[index].content = action.payload.content;
     },
     todoChecked: (todos, action) => {
       const index = todos.findIndex((todo) => todo.id === action.payload.id);
@@ -132,8 +132,41 @@ const slice = createSlice({
       const index = todos.findIndex((todo) => todo.id === action.payload.id);
       todos.splice(index, 1);
     },
+    todosThisListRemoved: (todos, action) => {
+      return todos.filter((todo) => todo.listId !== action.payload.id);
+
+      // for (let i = todos.length - 1; i > -1; i--) {
+      //   if (todos[i].listId === action.payload.id) {
+      //     todos.splice(i, 1);
+      //   }
+      // }
+
+      // todos.forEach((todo) => {
+      //   if (todo.listId === action.payload.id) {
+      //     const index = todos.findIndex(todo);
+      //     todos.splice(index, 1);
+      //   }
+      // });
+
+      // let newTodos = todos.filter((todo) => todo.listId !== action.payload.id);
+      // console.log(newTodos);
+
+      //   // const todosThisList =
+      //   // todosThisList.splice(0, todosThisList.length);
+    },
+    // todosRemoved: (todos, action) =>
+    //   todos.filter((todo) => todo.listId !== action.payload.id),
   },
+  // todoFinished: (todos, action) => {
+  //   return todos.filter(todo => todo.check !== )
+  // }
 });
 
-export const { todoAdded, todoChecked, todoRemoved } = slice.actions;
+export const {
+  todoAdded,
+  todoEdited,
+  todoChecked,
+  todoRemoved,
+  todosThisListRemoved,
+} = slice.actions;
 export default slice.reducer;

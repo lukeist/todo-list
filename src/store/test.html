@@ -1,0 +1,132 @@
+<div class="page-width">
+  <div class="grid">
+    <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+      <div class="section-header text-center"><h1>Welcome to keyysa</h1></div>
+      <div>
+        <span
+          ><a href="https://app.shipturtle.com/user/login" target="_blank"
+            >Already a seller? Click here to login</a
+          ></span
+        >
+      </div>
+      <br />
+      <div>
+        <span
+          >Hi! We would love to have you sell with us. To register, please fill
+          the form below.</span
+        ><br />
+        <span>We will get in touch with you soon.</span>
+      </div>
+      <div class="contact-form form-vertical">
+        <form
+          name="VendorForm"
+          action="https://api.shipturtle.com/api/v1/vendor/registration"
+          method="POST"
+          onSubmit="return SubmitForm()"
+        >
+          <div class="grid grid--half-gutters">
+            <div class="grid__item medium-up--one-half">
+              <label for="company"
+                >Company name <span aria-hidden="true"></span
+              ></label>
+              <input type="text" id="company" name="company_name" required />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="brand_name">Brand name</label>
+              <input type="text" id="brand_name" name="brand_name" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="contact"
+                >Contact name <span aria-hidden="true">*</span></label
+              >
+              <input type="text" id="contact" name="contact_name" required />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="phone">Phone</label>
+              <input type="text" id="phone" name="phone_number" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="email"
+                >Email <span aria-hidden="true">*</span>
+              </label>
+              <input
+                required
+                type="email"
+                id="email"
+                name="email"
+                autocorrect="off"
+                autocapitalize="off"
+                aria-required="true"
+              />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="address_line_1">Address line 1</label>
+              <input type="text" id="address_line_1" name="address_line_1" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="address_line_2">Address line 2</label>
+              <input type="text" id="address_line_2" name="address_line_2" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="country">Country</label>
+              <input type="text" id="country" name="country" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="state_province">State/Province</label>
+              <input type="text" id="state_province" name="state_code" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" />
+            </div>
+            <div class="grid__item medium-up--one-half">
+              <label for="pin_code">Zip code/Pin code</label>
+              <input type="text" id="pin_code" name="pin_code" />
+            </div>
+            <div class="grid__item medium-up--two-half">
+              <label for="notes">Notes</label>
+              <textarea name="notes" id="notes"></textarea>
+            </div>
+          </div>
+          <input type="hidden" name="company_id" value="12225" />
+          <input type="hidden" name="shop_id" value="676" /><br />
+          <input type="submit" class="btn" value="Join now" />
+        </form>
+        <div>
+          <span
+            ><a href="https://app.shipturtle.com/user/login" target="_blank"
+              >Already a seller? Click here to login</a
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function SubmitForm() {
+    var company = document.forms["VendorForm"]["company"];
+    var contact_name = document.forms["VendorForm"]["contact_name"];
+    var email = document.forms["VendorForm"]["email"];
+    // if (company.value == "") {
+    //   window.alert("Please enter your company.");
+    //   company.focus();
+    //   return false;
+    // }
+    if (contact_name.value == "") {
+      window.alert("Please enter your contact name.");
+      contact_name.focus();
+      return false;
+    }
+    if (email.value == "") {
+      window.alert("Please enter your email.");
+      email.focus();
+      return false;
+    }
+    return true;
+  }
+</script>

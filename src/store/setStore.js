@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reducer from "./todo";
+import reducer from "./reducer";
 // import todoReducer from "./reducers/todoReducer";
 // import { compose, createStore, applyMiddleware } from "redux";
 // import thunk from "redux-thunk";
@@ -18,4 +18,10 @@ import reducer from "./todo";
 const store = () => {
   return configureStore({ reducer });
 };
+
+// const store = configureStore({
+//   reducer,
+//   devTools: process.env.NODE_ENV !== "production",
+// });
+
 export default store();
