@@ -21,10 +21,12 @@ const slice = createSlice({
         title: action.payload.title,
       });
     },
+
     listTitleEdited: (lists, action) => {
       const index = lists.findIndex((list) => list.id === action.payload.id);
       lists[index].title = action.payload.title;
     },
+
     currentListStatusSet: (lists, action) => {
       const index = lists.findIndex((list) => list.id === action.payload.id);
       lists[index].status = action.payload.status;
@@ -42,6 +44,7 @@ const slice = createSlice({
       const index = lists.findIndex((list) => list.id === action.payload.id);
       lists.splice(index, 1);
     },
+
     todosAssigned: (lists, action) => {
       const index = lists.findIndex((list) => list.id === action.payload.id);
       lists[index].todos = action.payload.todos;

@@ -1,0 +1,39 @@
+nav {
+  min-height: 8vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1rem;
+  h1 {
+    color: rgb(170, 170, 170);
+  }
+  button {
+    // margin-left: 2rem;
+    display: flex;
+    justify-content: space-around;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border: 2px solid rgb(65, 65, 65);
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    &:hover {
+      background: rgb(120, 120, 120);
+      color: white;
+    }
+    &:active {
+      background: rgb(65, 65, 65);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  nav {
+    button {
+      z-index: 11;
+    }
+  }
+}

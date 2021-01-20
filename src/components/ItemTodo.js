@@ -1,99 +1,87 @@
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { todoAdded } from "../store/rtodos";
-import styled from "styled-components";
-import { motion } from "framer-motion";
 import { todoRemoved, todoChecked, todoEdited } from "../store/rtodos";
+import { monthNames } from "../store/ListInitialState";
 
-const ItemTodo = ({ id, content, check }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faSquare } from "@fortawesome/free-regular-svg-icons";
+
+const ItemTodo = ({ todo, id, content, check }) => {
   const dispatch = useDispatch();
   const [contentX, setContentX] = useState(content);
+  const [submitB, setSubmitB] = useState(false);
+
+  let date = new Date();
+  date.setDate(date.getDate());
+  date =
+    monthNames[date.getMonth()] +
+    " " +
+    date.getDate() +
+    ", " +
+    date.getFullYear();
 
   const inputTodo = (e) => {
     setContentX(e.target.value);
-  };
-  const clickNew = (e) => {
-    e.preventDefault();
-    const id = uuidv4();
-    dispatch(todoAdded({ id, content: contentX, check: true }));
   };
 
   const todoEditing = (e) => {
     e.preventDefault();
     dispatch(todoEdited({ id, content: contentX }));
+    setSubmitB(!submitB);
   };
 
   const todoChecking = () => {
-    dispatch(todoChecked({ id, check }));
+    dispatch(todoChecked({ id, check, dateFinished: date }));
   };
 
   const todoRemoving = () => {
     dispatch(todoRemoved({ id }));
   };
   return (
-    <StyledItem>
-      {/* <h3 onClick={editClick}>{contentX}</h3> */}
-      <StyledIcons>
-        <form className="nav-submit">
-          <input
-            type="text"
-            onClick={inputTodo}
-            onChange={inputTodo}
-            value={contentX}
-            onBlur={todoEditing}
-          />
-          <button
-            type="submit"
-            className="button-submit"
-            onClick={todoEditing}
-          ></button>
-        </form>
-
+    <div className="item-todo">
+      <form className="todo-submit" onSubmit={todoEditing}>
+        <input
+          type="text"
+          onClick={inputTodo}
+          onChange={inputTodo}
+          value={contentX}
+          onBlur={todoEditing}
+          onSubmit={todoEditing}
+        />
+        <button
+          onSubmit={todoEditing}
+          type="submit"
+          onClick={todoEditing}
+          className="button-submit"
+        >
+          <FontAwesomeIcon icon={faEdit} />
+        </button>
         {check === true ? (
-          <button onClick={todoChecking}>unchecked</button>
+          <p>added on {todo.dateAdded}</p>
         ) : (
-          <button onClick={todoChecking}>checked</button>
+          <p>
+            added on {todo.dateAdded}, finished on {date}
+          </p>
         )}
-
-        <button onClick={todoRemoving}>remove</button>
-      </StyledIcons>
-    </StyledItem>
+      </form>
+      <div className="todo-button-icons">
+        {check === true ? (
+          <button onClick={todoChecking}>
+            {/* unchecked */}
+            <FontAwesomeIcon icon={faSquare} />
+          </button>
+        ) : (
+          <button onClick={todoChecking}>
+            <FontAwesomeIcon icon={faCheck} />
+          </button>
+        )}
+        <button onClick={todoRemoving}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </div>
+    </div>
   );
 };
 
-const StyledItem = styled(motion.div)`
-  width: 60%;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  h3 {
-    cursor: pointer;
-  }
-`;
-const StyledIcons = styled(motion.div)`
-  display: flex;
-  button {
-    border: none;
-    cursor: pointer;
-    /* border-radius: 0.5rem; */
-    background: #ff7676;
-    padding: 0rem 1rem;
-    font-size: 1rem;
-    color: white;
-    :hover {
-      background: #ff7676;
-      border: none;
-      color: white;
-    }
-    :active {
-      /* outline: none; */
-      background: #cf2929;
-      transition: ease-out 0.3s;
-    }
-    :focus {
-      outline: none;
-    }
-  }
-`;
 export default ItemTodo;

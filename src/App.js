@@ -1,30 +1,28 @@
 import GlobalStyle from "./components/GlobalStyle";
 import AllItemList from "./components/AllItemList";
 import AllItemTodo from "./components/AllItemTodo";
-import ItemList from "./components/ItemList";
-
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { current } from "@reduxjs/toolkit";
+import ListsButton from "./components/ListsButton";
+import "./styles/app.scss";
 
 function App() {
   const lists = useSelector((state) => state.entities.lists);
-  // const todos = useSelector((state) => state.entities.todos);
   const [currentList, setCurrentList] = useState(lists[0]);
   const [currentLists, setCurrentLists] = useState(lists);
-  // const [currentTodos, setCurrentTodos] = useState(todos);
-  // const getPropsFromChild = (listId) => {
-  //   console.log("listId in parent: " + listId);
-  // };
+  const [showLists, setShowLists] = useState(false);
+
   return (
-    <div className="App">
+    <div className={`App ${showLists ? "lists-active" : ""}`}>
+      <ListsButton showLists={showLists} setShowLists={setShowLists} />
       <GlobalStyle />
       <AllItemList
+        showLists={showLists}
+        setShowLists={setShowLists}
         currentList={currentList}
         setCurrentList={setCurrentList}
         setCurrentLists={setCurrentLists}
       />
-      {/* <ItemList passPropsToParent={(listId) => getPropsFromChild(listId)} /> */}
       <AllItemTodo
         currentList={currentList}
         setCurrentList={setCurrentList}

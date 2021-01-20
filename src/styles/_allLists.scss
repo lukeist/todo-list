@@ -1,0 +1,216 @@
+// .shadow {
+//   width: 100%;
+//   min-height: 100vh;
+//   background: transparent;
+// }
+.lists-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20rem;
+  height: 100%;
+  background: rgb(248, 248, 248);
+  box-shadow: 2px 2px 50px rgb(204, 204, 204);
+  overflow: scroll;
+  transform: translateX(-100%);
+  transition: all 0.5s ease;
+  opacity: 0;
+  z-index: 1;
+}
+
+.active-lists-container {
+  transform: translateX(0%);
+  opacity: 1;
+  z-index: 10;
+}
+
+.new-list {
+  // background: blue;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  padding: 1rem;
+  input {
+    border: none;
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    background: white;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+    &:focus {
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+  }
+}
+.list-header {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(248, 248, 248);
+
+  h3 {
+    margin: 0.2rem;
+  }
+  button {
+    margin: 0.2rem;
+    border: none;
+    padding: 0.3rem;
+    color: #ff7676;
+    font-size: large;
+    background: rgb(245, 245, 245);
+    animation: pulse 8s infinite ease;
+    // transition: ease-out 0.8s ease;
+    // &:active {
+    //   background: #ff7676;
+    //   color: white;
+    // }
+    // // &:hover {
+    // //   background: #ffbbbb;
+    // }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+// .new-list-form {
+//   display: flex;
+//   flex-direction: column;
+// }
+.new-list-button {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: none;
+  // button {
+  //   font-size: 1rem;
+  //   cursor: pointer;
+  //   margin: 0rem 0.1rem;
+  //   padding: 0.3rem;
+  //   width: 5rem;
+  //   border: none;
+  //   border-color: #ff7676;
+  //   background: white;
+  //   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  //   color: #ff7676;
+
+  //   &:hover {
+  //     background: #ff7676;
+  //     border: none;
+  //     color: white;
+  //     transition: ease-out 0.3s;
+  //   }
+  //   &:active {
+  //     /* outline: none; */
+  //     background: #ffcdcd;
+  //     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  //     transition: ease-out 0.3s;
+  //   }
+  //   &:focus {
+  //     outline: none;
+  //   }
+  // }
+}
+.item-list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // flex-direction: column;
+  padding: 0rem 1rem;
+  margin: 0.3rem;
+  cursor: pointer;
+  transition: background 0.8s ease;
+  &:hover {
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    // input {
+    //   background: white;
+    // }
+  }
+  form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    // justify-content: center;
+  }
+  button {
+    cursor: pointer;
+    margin: 0.2rem;
+    border: none;
+    padding: 0.3rem;
+    color: #ff7676;
+    font-size: large;
+    background: transparent;
+  }
+
+  input {
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+    color: grey;
+    &:active {
+      background: transparent;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+      transition: ease-out 0.3s;
+    }
+    &:focus {
+      box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+  }
+}
+.item-list-child {
+  // background: red;
+  // display: flex;
+  padding: 0.5rem 0.2rem;
+}
+.selected {
+  background: white;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  input {
+    /* outline: none; */
+    background: white;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  }
+}
+
+// .item-list-input-active {
+//   border: none;
+//   &:active & item-list-input-active {
+//     /* outline: none; */
+//     background: #cf2929;
+//     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+//     transition: ease-out 0.3s;
+//   }
+//   background: lightpink;
+// }
+
+// for firefox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+// for others
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 100%;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+@media screen and (max-width: 768px) {
+  .lists-container {
+    width: 100%;
+  }
+}

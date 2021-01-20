@@ -1,30 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   listTitleEdited,
   listRemoved,
   currentListStatusSet,
 } from "../store/rlists";
 import { todosThisListRemoved } from "../store/rtodos";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import setStore from "../store/setStore";
 
-const ItemList = ({ setCurrentList, currentList, list, id, title, status }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+
+const ItemList = ({ setCurrentList, list, id, title, status }) => {
   const dispatch = useDispatch();
   const lists = setStore.getState().entities.lists;
 
   const [titleX, setTitleX] = useState(title);
   const [onEdit, setOnEdit] = useState(false);
 
-  // const listId = id;
-  // useEffect(() => {
-  //   console.log(id, title);
-  //   console.log("values in child: " + listId);
-  //   props.passPropsToParent(listId);
-  // }, []);
-
   const listRemoving = () => {
     if (status === true && lists.indexOf(list) !== 0) {
-      // const lists = setStore.getState().entities.lists;
       const newIndex = lists.indexOf(list) - 1;
       setCurrentList(lists[newIndex]);
       dispatch(currentListStatusSet({ id: lists[newIndex].id, status: true }));
@@ -34,25 +29,6 @@ const ItemList = ({ setCurrentList, currentList, list, id, title, status }) => {
       dispatch(listRemoved({ id }));
       dispatch(todosThisListRemoved({ id }));
     }
-    // const todos = setStore.getState().entities.todos;
-    // const todosThisList = todos.filter((todo) => todo.listId !== id);
-    // todosThisList.length = 0;
-    // PHAI REMOVE LITS'S TODOS LUON
-
-    // const lists = setStore.getState().entities.lists;
-    // if (lists.indexOf(currentList) === lists.length - 1) {
-    //   dispatch(listRemoved({ id }));
-    //   lists = setStore.getState().entities.lists;
-    //   dispatch(
-    //     currentListStatusSet({ id: lists[lists.length - 1].id, status: true })
-    //   );
-    // } else {
-    //   dispatch(listRemoved({ id }));
-    //    lists = setStore.getState().entities.lists;
-    //    dispatch(
-    //     currentListStatusSet({ id: lists[lists.length - 1].id, status: true })
-    //   );
-    // }
   };
 
   const titleInput = (e) => {
@@ -74,49 +50,50 @@ const ItemList = ({ setCurrentList, currentList, list, id, title, status }) => {
   const clickCurrentList = () => {
     setCurrentList(list);
     dispatch(currentListStatusSet({ id, status: true }));
-
-    // console.log(currentList);
-    // console.log(AllItemTodo);
-    // store.subscribe(() => {
-    //   const state = store.getState();
-    //   console.log(state.lists[index].todos);
-    // });
-    // dispatch(todosAssigned(todos));
   };
 
   return (
-    <div>
-      <div className="list-item" onClick={clickCurrentList}>
-        <div>
-          {onEdit ? (
-            <form onSubmit={listTitleEditing}>
-              <input
-                type="text"
-                // onClick={titleInput}
-                onChange={titleInput}
-                value={titleX}
-                onBlur={listTitleEditing}
-              />
-              <button onSubmit={listTitleEditing}>submit</button>
-            </form>
-          ) : (
-            <form>
-              <h2>{title}</h2>
-              <button className="list-edit" onClick={listTitleOpenEditing}>
-                edit name
+    <div className={`item-list ${list.status ? "selected" : ""}`}>
+      <div className="item-list-child" onClick={clickCurrentList}>
+        {onEdit ? (
+          <form className="item-list-form" onSubmit={listTitleEditing}>
+            <input
+              className="item-list-input-active"
+              type="text"
+              onChange={titleInput}
+              value={titleX}
+              onBlur={listTitleEditing}
+            />
+            <div className="item-list-buttons">
+              <button onSubmit={listTitleEditing}>
+                <FontAwesomeIcon icon={faCheck} />
               </button>
-            </form>
-          )}
-        </div>
+            </div>
+          </form>
+        ) : (
+          <form>
+            <input className="item-list-input-inactive" value={title} />
+            <div className="item-list-buttons">
+              <button
+                className="button-list-edit"
+                onClick={listTitleOpenEditing}
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+            </div>
+          </form>
+        )}
       </div>
+      {/* 
+        //can not put button 'remove' together with button 'edit' because of the
+        //clickCurrentList: when we click on this 'remove' button, it runs
+        //clickCurrentList at the same time thus error 
+    */}
       <div>
-        <button className="list-remove" onClick={listRemoving}>
-          remove list
+        <button className="button-list-remove" onClick={listRemoving}>
+          <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
-      {/* <div className="todo-items">
-        <AllItemTodo />
-      </div> */}
     </div>
   );
 };
